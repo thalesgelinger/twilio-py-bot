@@ -12,7 +12,16 @@ def hello():
 def bot():
     resp = MessagingResponse()
     msg = resp.message()
-    msg.body('oi')
+
+    incomming_msg = request.values.get('Body', '').lower()
+    
+    if 'cachorro' in incomming_msg:
+        response = requests.get('https://dog.ceo/api/breeds/image/random').json()
+        dog_image = response["message"]
+        msg.media(dog_image)
+    else:
+        msg.body('Num entendi foi nada, ASUHDUASHDUAHSDUHASUD')
+
     return str(resp)
 
 
